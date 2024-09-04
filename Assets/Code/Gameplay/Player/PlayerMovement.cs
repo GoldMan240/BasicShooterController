@@ -1,8 +1,8 @@
-using Code.Services;
+using Infrastructure;
+using Services;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Code
+namespace Gameplay.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
@@ -18,7 +18,7 @@ namespace Code
 
         private void Awake()
         {
-            _inputService = new StandaloneInputService();
+            _inputService = ServiceLocator.Get<IInputService>();
         }
         
         private void Update()
