@@ -1,5 +1,6 @@
 using Gameplay.Bullet;
 using Infrastructure.AssetProvision;
+using Infrastructure.Services;
 using Services;
 using UnityEngine;
 
@@ -14,9 +15,9 @@ namespace Infrastructure
 
         private void RegisterServices()
         {
-            ServiceLocator.Register<IInputService>(new StandaloneInputService());
-            ServiceLocator.Register<IAssetProvider>(new AssetProvider());
-            ServiceLocator.Register<IBulletFactory>(new BulletFactory(ServiceLocator.Get<IAssetProvider>()));
+            ServiceLocator.Container.Register<IInputService>(new StandaloneInputService());
+            ServiceLocator.Container.Register<IAssetProvider>(new AssetProvider());
+            ServiceLocator.Container.Register<IBulletFactory>(new BulletFactory(ServiceLocator.Container.Get<IAssetProvider>()));
         }
     }
 }
