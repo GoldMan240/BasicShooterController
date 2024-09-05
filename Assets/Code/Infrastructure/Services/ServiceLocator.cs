@@ -1,37 +1,39 @@
 using System;
 using System.Collections.Generic;
 
-namespace Infrastructure
+namespace Infrastructure.Services
 {
     public class ServiceLocator
     {
-        private static readonly Dictionary<Type, object> Services = new();
+        public static ServiceLocator Container => _instance ??= new ServiceLocator(); 
+        
         private static ServiceLocator _instance;
+        private readonly Dictionary<Type, IService> _services = new();
 
-        public static void Register<T>(T service)
+        public void Register<T>(T service) where T : IService
         {
             Type type = typeof(T);
-            if (Services.ContainsKey(type))
+            if (_services.ContainsKey(type))
             {
                 throw new Exception($"Service {type} is already registered.");
             }
-            Services[type] = service;
+            _services[type] = service;
         }
 
-        public static void Unregister<T>()
+        public void Unregister<T>() where T : IService
         {
             Type type = typeof(T);
-            if (!Services.ContainsKey(type))
+            if (!_services.ContainsKey(type))
             {
                 throw new Exception($"Service {type} is not registered.");
             }
-            Services.Remove(type);
+            _services.Remove(type);
         }
 
-        public static T Get<T>()
+        public T Get<T>() where T : IService
         {
             Type type = typeof(T);
-            if (!Services.TryGetValue(type, out object service))
+            if (!_services.TryGetValue(type, out IService service))
             {
                 throw new Exception($"Service {type} is not registered.");
             }

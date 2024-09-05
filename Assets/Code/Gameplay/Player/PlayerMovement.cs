@@ -1,4 +1,5 @@
 using Infrastructure;
+using Infrastructure.Services;
 using Services;
 using UnityEngine;
 
@@ -18,7 +19,7 @@ namespace Gameplay.Player
 
         private void Awake()
         {
-            _inputService = ServiceLocator.Get<IInputService>();
+            _inputService = ServiceLocator.Container.Get<IInputService>();
         }
         
         private void Update()

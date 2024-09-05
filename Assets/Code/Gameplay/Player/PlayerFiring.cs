@@ -1,5 +1,6 @@
 using Gameplay.Bullet;
 using Infrastructure;
+using Infrastructure.Services;
 using Services;
 using UnityEngine;
 
@@ -14,8 +15,8 @@ namespace Gameplay.Player
 
         private void Awake()
         {
-            _inputService = ServiceLocator.Get<IInputService>();
-            _bulletFactory = ServiceLocator.Get<IBulletFactory>();
+            _inputService = ServiceLocator.Container.Get<IInputService>();
+            _bulletFactory = ServiceLocator.Container.Get<IBulletFactory>();
         }
 
         private void Update()
